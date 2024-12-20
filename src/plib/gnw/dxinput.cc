@@ -1,4 +1,8 @@
 #include "plib/gnw/dxinput.h"
+#ifdef __SWITCH__
+#include <switch.h>
+#include "plib/gnw/mouse.h"
+#endif
 
 namespace fallout {
 
@@ -9,6 +13,12 @@ static void dxinput_keyboard_exit();
 
 static int gMouseWheelDeltaX = 0;
 static int gMouseWheelDeltaY = 0;
+
+ #ifdef __SWITCH__
+ static const int JOYSTICK_DEAD_ZONE = 8000;
+ static PadState pad;
+ double cursorSpeedup = 1.0;
+ #endif
 
 // 0x4E0400
 bool dxinput_init()
@@ -24,6 +34,12 @@ bool dxinput_init()
     if (!dxinput_keyboard_init()) {
         goto err;
     }
+
+    #ifdef __SWITCH__ //CHECK: no idea if this should be removed
+    padConfigureInput(1, HidNpadStyleSet_NpadStandard);
+    padInitializeDefault(&pad);
+    #endif
+    return true;
 
     return true;
 
@@ -71,6 +87,13 @@ bool dxinput_get_mouse_state(MouseData* mouseState)
 
     gMouseWheelDeltaX = 0;
     gMouseWheelDeltaY = 0;
+
+     #ifdef __SWITCH__
+    padUpdate(&pad);
+    
+    handleLeftStickMovement(mouseState);
+    handleControllerButtons(mouseState);
+    #endif
 
     return true;
 }
@@ -131,6 +154,26 @@ void handleMouseEvent(SDL_Event* event)
         gMouseWheelDeltaX += event->wheel.x;
         gMouseWheelDeltaY += event->wheel.y;
     }
+}
+
+void handleLeftStickMovement(MouseData* mouseState)
+{
+    HidAnalogStickState leftStick = padGetStickPos(&pad, 0);
+    if (abs(leftStick.x) > JOYSTICK_DEAD_ZONE || abs(leftStick.y) > JOYSTICK_DEAD_ZONE) {
+        mouseState->x += static_cast<int>((leftStick.x / 10000) * cursorSpeedup * (gMouseSensitivity * 1.5));
+        mouseState->y -= static_cast<int>((leftStick.y / 10000) * cursorSpeedup * (gMouseSensitivity * 1.5));
+    }
+
+    // Clamp mouse coordinates to screen boundaries
+    if (mouseState->x >= 1708) mouseState->x = 1707; // TODO if we're grabbing custom resolution make sure these boundaries are respected..
+    if (mouseState->y >= 960) mouseState->y = 959;
+}
+
+void handleControllerButtons(MouseData* mouseState)
+{
+    u64 buttons = padGetButtons(&pad);
+    mouseState->buttons[0] |= (buttons & HidNpadButton_ZL) != 0;
+    mouseState->buttons[1] |= (buttons & HidNpadButton_ZR) != 0;
 }
 
 } // namespace fallout

@@ -30,6 +30,7 @@ namespace fallout {
 
 extern ScreenTransBlitFunc* mouse_blit_trans;
 extern ScreenBlitFunc* mouse_blit;
+extern double gMouseSensitivity;
 
 int GNW_mouse_init();
 void GNW_mouse_exit();

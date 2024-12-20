@@ -52,7 +52,7 @@ static unsigned char* mouse_shape = NULL;
 static unsigned char* mouse_fptr = NULL;
 
 // 0x539DD0
-static double mouse_sensitivity = 1.0;
+double gMouseSensitivity = 1.0;
 
 // 0x539DDC
 static int last_buttons = 0;
@@ -498,8 +498,8 @@ void mouse_info()
     }
 
     // Adjust for mouse senstivity.
-    x = (int)(x * mouse_sensitivity);
-    y = (int)(y * mouse_sensitivity);
+    x = (int)(x * gMouseSensitivity);
+    y = (int)(y * gMouseSensitivity);
 
     if (vcr_state == VCR_STATE_PLAYING) {
         if (((vcr_terminate_flags & VCR_TERMINATE_ON_MOUSE_PRESS) != 0 && buttons != 0)
@@ -798,14 +798,14 @@ bool mouse_is_disabled()
 void mouse_set_sensitivity(double value)
 {
     if (value > 0 && value < 2.0) {
-        mouse_sensitivity = value;
+        gMouseSensitivity = value;
     }
 }
 
 // 0x4B54F4
 double mouse_get_sensitivity()
 {
-    return mouse_sensitivity;
+    return gMouseSensitivity;
 }
 
 // 0x4B54FC

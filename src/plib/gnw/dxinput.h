@@ -5,6 +5,10 @@
 
 namespace fallout {
 
+#ifdef __SWITCH__
+extern double cursorSpeedup;
+#endif
+
 typedef struct MouseData {
     int x;
     int y;
@@ -29,6 +33,8 @@ bool dxinput_flush_keyboard_buffer();
 bool dxinput_read_keyboard_buffer(KeyboardData* keyboardData);
 
 void handleMouseEvent(SDL_Event* event);
+void handleLeftStickMovement(MouseData* mouseState);
+void handleControllerButtons(MouseData* mouseState);
 
 } // namespace fallout
 
