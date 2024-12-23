@@ -70,9 +70,6 @@ int main(int argc, char* argv[])
 
 
 #ifdef __SWITCH__
-    nsInitialize();
-    fsdevMountSdmc();
-
     SDL_SetHint(SDL_HINT_MOUSE_TOUCH_EVENTS, "0");
     SDL_SetHint(SDL_HINT_TOUCH_MOUSE_EVENTS, "0");
 
@@ -101,3 +98,20 @@ int main(int argc, char* argv[])
 {
     return fallout::main(argc, argv);
 }
+
+#ifdef __SWITCH__
+extern "C" {
+
+void userAppInit(void) {
+    Result rc;
+
+    if (R_FAILED(rc = appletLockExit()))
+        diagAbortWithResult(rc);
+}
+
+void userAppExit(void) {
+    appletUnlockExit();
+}
+
+}
+#endif

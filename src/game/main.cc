@@ -45,6 +45,10 @@
 #include "plib/gnw/svga.h"
 #include "plib/gnw/text.h"
 
+#ifdef __SWITCH__
+#include <switch.h>
+#endif
+
 namespace fallout {
 
 #define DEATH_WINDOW_WIDTH 640
@@ -106,6 +110,11 @@ int gnw_main(int argc, char** argv)
         config_get_value(&game_config, GAME_CONFIG_PREFERENCES_KEY, GAME_CONFIG_LANGUAGE_FILTER_KEY, &language_filter);
 
         while (!done) {
+
+#ifdef __SWITCH__
+            // returns false when closed via the home menu. from iTotalJustice on fo2 port, thank you!
+            done = !appletMainLoop();
+#endif
             kb_clear();
             gsound_background_play_level_music("07desert", 11);
             main_menu_show(1);
