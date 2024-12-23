@@ -18,8 +18,6 @@
 
 #ifdef __SWITCH__
 #include <switch.h>
-#include "logger.h"
-// #include "utils.h"
 #endif
 
 
