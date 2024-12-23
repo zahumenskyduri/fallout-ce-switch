@@ -436,8 +436,10 @@ void mouse_info()
         switch (gesture.type) {
         case kTap:
             if (gesture.numberOfTouches == 1) {
+                mouse_set_position(gesture.x, gesture.y);
                 mouse_simulate_input(0, 0, MOUSE_STATE_LEFT_BUTTON_DOWN);
             } else if (gesture.numberOfTouches == 2) {
+                mouse_set_position(gesture.x, gesture.y);
                 mouse_simulate_input(0, 0, MOUSE_STATE_RIGHT_BUTTON_DOWN);
             }
             break;
@@ -446,6 +448,7 @@ void mouse_info()
             if (gesture.state == kBegan) {
                 prevx = gesture.x;
                 prevy = gesture.y;
+                mouse_set_position(gesture.x, gesture.y);
             }
 
             if (gesture.type == kLongPress) {
@@ -456,7 +459,8 @@ void mouse_info()
                 }
             } else if (gesture.type == kPan) {
                 if (gesture.numberOfTouches == 1) {
-                    mouse_simulate_input(gesture.x - prevx, gesture.y - prevy, 0);
+                    mouse_set_position(gesture.x, gesture.y);
+                    // mouse_simulate_input(gesture.x, gesture.y, 0);
                 } else if (gesture.numberOfTouches == 2) {
                     gMouseWheelX = (prevx - gesture.x) / 2;
                     gMouseWheelY = (gesture.y - prevy) / 2;

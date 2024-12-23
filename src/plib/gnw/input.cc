@@ -173,11 +173,11 @@ int GNW_input_init(int use_msec_timer)
     input_my = -1;
     bk_disabled = 0;
     game_paused = false;
-    pause_key = KEY_ALT_P; // do we have to change these for Switch?
+    pause_key = KEY_ALT_P;
     pause_win_func = default_pause_window;
     screendump_func = default_screendump;
     bk_list = NULL;
-    screendump_key = KEY_ALT_C; // do we have to change these for Switch?
+    screendump_key = KEY_ALT_C;
 
     set_idle_func(idleImpl);
 
@@ -1220,6 +1220,8 @@ static void GNW95_process_key(KeyboardData* data)
     // timestamps, see usage from |_GNW95_process_message|.
     int scanCode = data->key;
 
+    // Logger::getInstance().logWithTimestamp("Key event: %s, down: %d", SDL_GetScancodeName(static_cast<SDL_Scancode>(scanCode)), data->down);
+
     data->key = GNW95_key_map[data->key];
 
     if (vcr_state == VCR_STATE_PLAYING) {
@@ -1388,6 +1390,12 @@ void handleSwitchControllerEvents(uint64_t kDown, uint64_t kUp, uint64_t kHeld) 
     if (kDown & HidNpadButton_Down) handleControllerButtonEvent(HidControllerButtons::KEY_DPAD_DOWN, true);
     if (kUp & HidNpadButton_Down) handleControllerButtonEvent(HidControllerButtons::KEY_DPAD_DOWN, false);
 
+    if (kDown & HidNpadButton_Left) handleControllerButtonEvent(HidControllerButtons::KEY_DPAD_LEFT, true);
+    if (kUp & HidNpadButton_Left) handleControllerButtonEvent(HidControllerButtons::KEY_DPAD_LEFT, false);
+
+    if (kDown & HidNpadButton_Right) handleControllerButtonEvent(HidControllerButtons::KEY_DPAD_RIGHT, true);
+    if (kUp & HidNpadButton_Right) handleControllerButtonEvent(HidControllerButtons::KEY_DPAD_RIGHT, false);
+
     if (kDown & HidNpadButton_L) handleControllerButtonEvent(HidControllerButtons::KEY_L, true);
     if (kUp & HidNpadButton_L) handleControllerButtonEvent(HidControllerButtons::KEY_L, false);
 
@@ -1447,7 +1455,7 @@ void handleControllerButtonEvent(HidControllerButtons button, bool pressed) {
         keyboardData.down = pressed ? 1 : 0;
         GNW95_process_key(&keyboardData);
         break;
-    case HidControllerButtons::KEY_L:
+    case HidControllerButtons::KEY_R:
         // Toggle cursor speedup
         cursorSpeedup = pressed ? 2.0f : 1.0f;
         break;
@@ -1475,6 +1483,18 @@ void handleControllerButtonEvent(HidControllerButtons button, bool pressed) {
         keyboardData.down = pressed ? 1 : 0;
         GNW95_process_key(&keyboardData);
         break;
+    case HidControllerButtons::KEY_DPAD_LEFT:
+        // Quick save
+        keyboardData.key = SDL_SCANCODE_F6;
+        keyboardData.down = pressed ? 1 : 0;
+        GNW95_process_key(&keyboardData);
+        break;
+    case HidControllerButtons::KEY_DPAD_RIGHT:
+        // Quick load
+        keyboardData.key = SDL_SCANCODE_F7;
+        keyboardData.down = pressed ? 1 : 0;
+        GNW95_process_key(&keyboardData);
+        break;
     default:
         break;
     }
@@ -1484,7 +1504,6 @@ void handleControllerAxisEvent(const HidAnalogStickState& rightStick)
 {
     if (textInputActive) return;
 
-    //todo: gotta be a better way to do this lmao..
     const uint32_t currentTime = SDL_GetTicks();
     lastControllerTime = currentTime;
 

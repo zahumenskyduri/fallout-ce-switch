@@ -165,7 +165,7 @@ void handleLeftStickMovement(MouseData* mouseState)
     }
 
     // Clamp mouse coordinates to screen boundaries
-    if (mouseState->x >= 1708) mouseState->x = 1707; // TODO if we're grabbing custom resolution make sure these boundaries are respected..
+    if (mouseState->x >= 1708) mouseState->x = 1707;
     if (mouseState->y >= 960) mouseState->y = 959;
 }
 

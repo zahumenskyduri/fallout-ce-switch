@@ -368,7 +368,13 @@ int main_menu_loop()
             }
         }
 
-        if (keyCode == KEY_ESCAPE || game_user_wants_to_quit == 3) {
+        bool allow_escape = true;
+
+#ifdef __SWITCH__
+        allow_escape = false;
+#endif
+
+        if ((allow_escape && keyCode == KEY_ESCAPE) || game_user_wants_to_quit == 3) {
             rc = MAIN_MENU_EXIT;
 
             // NOTE: Uninline.

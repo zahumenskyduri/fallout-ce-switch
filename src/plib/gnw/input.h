@@ -13,22 +13,24 @@
 namespace fallout {
 
 #ifdef __SWITCH__
-    enum class HidControllerButtons {
-        KEY_A,
-        KEY_B,
-        KEY_X,
-        KEY_Y,
-        KEY_PLUS,
-        KEY_MINUS,
-        KEY_LSTICK,
-        KEY_RSTICK,
-        KEY_DPAD_UP,
-        KEY_DPAD_DOWN,
-        KEY_L,
-        KEY_R,
-        KEY_ZL,
-        KEY_ZR
-    };
+enum class HidControllerButtons {
+    KEY_A,
+    KEY_B,
+    KEY_X,
+    KEY_Y,
+    KEY_PLUS,
+    KEY_MINUS,
+    KEY_LSTICK,
+    KEY_RSTICK,
+    KEY_DPAD_UP,
+    KEY_DPAD_DOWN,
+    KEY_DPAD_LEFT,
+    KEY_DPAD_RIGHT,
+    KEY_L,
+    KEY_R,
+    KEY_ZL,
+    KEY_ZR
+};
 
 #endif
 
