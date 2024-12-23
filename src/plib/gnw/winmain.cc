@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
 {
     int rc;
 
-    Logger::getInstance().redirectStdio(); // make sure to comment this out before releasing
+    //Logger::getInstance().redirectStdio();
 
 #if _WIN32
     GNW95_mutex = CreateMutexA(0, TRUE, "GNW95MUTEX");
@@ -75,9 +75,6 @@ int main(int argc, char* argv[])
 
     const char* primaryPath = "sdmc:/switch/fallout1/";
 
-    // if (fileExists(primaryPath, "master.dat")) { // what did i do this for also why is it commented out
-        chdir(primaryPath);
-    // } 
 #endif
 
     SDL_ShowCursor(SDL_DISABLE);
