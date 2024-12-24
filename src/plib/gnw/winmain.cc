@@ -73,6 +73,7 @@ int main(int argc, char* argv[])
 
     const char* primaryPath = "sdmc:/switch/fallout1/";
 
+    chdir(primaryPath);
 #endif
 
     SDL_ShowCursor(SDL_DISABLE);
