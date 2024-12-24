@@ -322,7 +322,7 @@ if(NX)
     add_custom_command(TARGET ${EXECUTABLE_NAME} POST_BUILD
         COMMAND /opt/devkitpro/tools/bin/nacptool --create "fallout-ce" "Interplay / alexbatalov / ryandeering" "${F1_VERSION}" ${CMAKE_BINARY_DIR}/fallout-ce.nacp
         COMMAND /opt/devkitpro/tools/bin/elf2nso ${EXECUTABLE_NAME} ${EXECUTABLE_NAME}.nso
-        COMMAND /opt/devkitpro/tools/bin/elf2nro ${EXECUTABLE_NAME} ${EXECUTABLE_NAME}.nro --nacp=${CMAKE_BINARY_DIR}/fallout-ce.nacp
+        COMMAND /opt/devkitpro/tools/bin/elf2nro ${EXECUTABLE_NAME} ${EXECUTABLE_NAME}.nro --icon=${CMAKE_SOURCE_DIR}/assets/icon.jpg --nacp=${CMAKE_BINARY_DIR}/fallout-ce.nacp
     )
 
 endif()
