@@ -23,7 +23,7 @@ You must own the game to play and have a Switch capable of running **unsigned co
 
 <div align="center">
 
-![layout](assets/inputs.png)
+![layout](assets/inputs.jpg)
 
 </div>
 
