@@ -17,7 +17,7 @@ You must own the game to play and have a Switch capable of running **unsigned co
 3. Drag the installation files into a new folder called `fallout1` in your `switch` folder on the root of your SD card.
 4. Put the necessary executable in your `switch` folder on the root of your SD card, either `.nro` or `.nso`.
 
-> **Note:** Keep multiple saves! Quick save/quick loading currently save/load twice. This will be fixed... eventually.
+> **Note:** I would not expect your original Fallout 1 saves/non-CE saves to work. And keep multiple saves! Quick save/quick loading currently save/load twice. This will be fixed... eventually.
 
 ## Controls
 
