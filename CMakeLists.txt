@@ -10,6 +10,16 @@ else()
   set(F1_VERSION $ENV{F1_VERSION})
 endif()
 
+if (APPLE)
+    if(IOS)
+        set(CMAKE_OSX_DEPLOYMENT_TARGET "12" CACHE STRING "")
+        set(CMAKE_OSX_ARCHITECTURES "arm64" CACHE STRING "")
+    else()
+        set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13" CACHE STRING "")
+        set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "")
+    endif()
+endif()
+
 project(${EXECUTABLE_NAME})
 
 set(CMAKE_CXX_STANDARD 17)
@@ -264,8 +274,6 @@ if(NX)
     "src/plib/gnw/winmain.h"
     "src/movie_lib.cc"
     "src/movie_lib.h"
-    "src/sound_decoder.cc"
-    "src/sound_decoder.h"
     "src/audio_engine.cc"
     "src/audio_engine.h"
     "src/fps_limiter.cc"
@@ -284,6 +292,12 @@ if(NX)
 else()
     message(FATAL_ERROR "This CMakeLists.txt is configured to build for Switch only.")
 endif()
+
+add_subdirectory("third_party/adecode")
+target_link_libraries(${EXECUTABLE_NAME} adecode::adecode)
+
+add_subdirectory("third_party/fpattern")
+target_link_libraries(${EXECUTABLE_NAME} fpattern::fpattern)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
