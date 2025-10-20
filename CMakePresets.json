@@ -1,0 +1,39 @@
+{
+  "version": 4,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21
+  },
+  "configurePresets": [
+    {
+      "name": "switch-debug",
+      "displayName": "Switch Debug",
+      "description": "Configure Debug build for Nintendo Switch using devkitA64 toolchain.",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build",
+      "toolchainFile": "${sourceDir}/cmake/toolchain/switch.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "NX": "ON",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "switch-debug",
+      "displayName": "Switch Debug Build",
+      "description": "Build the Switch Debug configuration.",
+      "configurePreset": "switch-debug"
+    },
+    {
+      "name": "switch-debug-clean",
+      "displayName": "Switch Debug Clean",
+      "description": "Clean the Switch Debug build output.",
+      "configurePreset": "switch-debug",
+      "targets": [
+        "clean"
+      ]
+    }
+  ]
+}

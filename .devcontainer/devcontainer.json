@@ -1,0 +1,72 @@
+{
+  "name": "Fallout 1 switch dev",
+  "image": "devkitpro/devkita64:latest",
+  
+  "features": {},
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.cmake-tools",
+        "twxs.cmake",
+        "ms-vscode.hexeditor",
+        "eamodio.gitlens",
+        "github.vscode-github-actions",
+        "ms-vscode.vscode-json",
+        "redhat.vscode-yaml",
+        "streetsidesoftware.code-spell-checker"
+      ],
+      "settings": {
+        "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+        "C_Cpp.default.cppStandard": "c++17",
+        "C_Cpp.default.intelliSenseMode": "gcc-arm64",
+        "C_Cpp.default.compilerPath": "/opt/devkitpro/devkitA64/bin/aarch64-none-elf-gcc",
+        "cmake.configureOnOpen": false,
+        "cmake.buildDirectory": "${workspaceFolder}/build",
+        "cmake.generator": "Unix Makefiles",
+        "cmake.configureArgs": [
+          "-DCMAKE_BUILD_TYPE=Debug",
+          "-DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/switch.cmake",
+          "-DNX=ON",
+          "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
+        ],
+        "files.associations": {
+          "*.cc": "cpp",
+          "*.h": "cpp",
+          "*.cmake": "cmake",
+          "CMakeLists.txt": "cmake"
+        },
+        "C_Cpp.default.defines": [
+          "__SWITCH__",
+          "SWITCH",
+          "NX"
+        ],
+        "git.autofetch": true
+      }
+    }
+  },
+
+  "containerEnv": {
+    "DEVKITPRO": "/opt/devkitpro",
+    "DEVKITA64": "/opt/devkitpro/devkitA64",
+    "PATH": "/opt/devkitpro/devkitA64/bin:/opt/devkitpro/tools/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  },
+
+  "remoteUser": "root",
+  "workspaceFolder": "/workspace",
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+  ],
+
+  "postCreateCommand": "chmod +x .devcontainer/setup.sh && .devcontainer/setup.sh",
+
+  "forwardPorts": [],
+
+  "otherPortsAttributes": {
+    "onAutoForward": "silent"
+  },
+
+  "shutdownAction": "stopContainer"
+}

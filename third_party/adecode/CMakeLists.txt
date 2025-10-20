@@ -1,5 +1,12 @@
 include(FetchContent)
 
+execute_process(
+    COMMAND git config --global --add safe.directory "*"
+    RESULT_VARIABLE GIT_CONFIG_RESULT
+    OUTPUT_QUIET
+    ERROR_QUIET
+)
+
 FetchContent_Declare(adecode
     GIT_REPOSITORY "https://github.com/alexbatalov/adecode"
     GIT_TAG e4a8b0f3b66826e0b7779a25d79df8497f8f8087 # v1.0.0
