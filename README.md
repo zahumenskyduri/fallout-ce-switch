@@ -24,7 +24,7 @@ SCR_HEIGHT=960
 SCALE_2X=1
 ; Change resolution and determine scaling. SCALE_2X=1 will turn 2x scaling on. SCALE_2X=0 will turn it off. 
 ```
-*Note:* If you don't create the fallout1_nx.ini file, the game will use default settings (1708x960 resolution with 2x scaling).
+*Note:* Failure to create the fallout1_nx.ini and required content in it will cause the game to immediately crash upon launch.
 
 6. Put the necessary executable in your `switch` folder on the root of your SD card, either `.nro` or `.nso`.
 
